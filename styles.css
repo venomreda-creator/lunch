@@ -1,0 +1,250 @@
+:root {
+  font-family: "DM Sans", "Gowun Dodum", sans-serif;
+  color: #20251f;
+  background: #f7f7f2;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --ink: #20251f;
+  --muted: #858980;
+  --line: #e7e8e0;
+  --paper: #fff;
+  --lime: #dafa61;
+  --green: #486a3d;
+  --forest: #27392e;
+  --coral: #f47556;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 94px; }
+body { min-width: 360px; margin: 0; }
+button, a { font: inherit; }
+a { color: inherit; text-decoration: none; }
+button { color: inherit; }
+svg { display: block; }
+
+.site-header {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  height: 76px;
+  background: rgb(247 247 242 / 92%);
+  border-bottom: 1px solid rgb(32 37 31 / 6%);
+  backdrop-filter: blur(16px);
+}
+.header-inner { width: min(1160px, calc(100% - 64px)); height: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+.brand { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 230px; }
+.brand-mark { display: grid; width: 39px; height: 39px; place-items: center; border-radius: 13px; color: #fff; background: var(--forest); }
+.brand-mark svg { width: 27px; height: 27px; }
+.brand-name { font-family: "Manrope", "Gowun Dodum", sans-serif; font-size: 21px; font-weight: 800; letter-spacing: -1.3px; }
+.brand-period, .footer-brand span { color: var(--coral); }
+.main-nav { display: flex; align-items: center; gap: 34px; height: 100%; }
+.nav-link { position: relative; display: grid; height: 100%; place-items: center; color: #747970; font-size: 13px; font-weight: 600; transition: color .2s ease; }
+.nav-link:hover, .nav-link.active { color: var(--ink); }
+.nav-link.active::after { position: absolute; right: 0; bottom: 0; left: 0; height: 2px; content: ""; background: var(--green); }
+.header-meta { display: flex; flex: 0 0 230px; justify-content: flex-end; align-items: center; gap: 15px; }
+.location-pill { display: inline-flex; align-items: center; gap: 6px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: #61665e; font-size: 11px; font-weight: 600; }
+.location-pill svg, .detail-icon svg { width: 15px; height: 15px; fill: none; stroke: #778471; stroke-width: 1.4; }
+.avatar { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 50%; color: #344334; background: #e3ebd9; font-family: "Gowun Dodum", sans-serif; font-size: 13px; font-weight: 700; }
+
+.page-shell { width: min(1160px, calc(100% - 64px)); margin: 0 auto; }
+.intro { display: flex; justify-content: space-between; align-items: flex-end; padding: 54px 0 30px; }
+.eyebrow, .section-kicker { color: #81877b; font-size: 9px; font-weight: 700; letter-spacing: 1.75px; }
+.eyebrow { display: flex; align-items: center; gap: 8px; }
+.eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--coral); box-shadow: 0 0 0 4px rgb(244 117 86 / 13%); }
+h1, h2, h3, p { margin-top: 0; }
+.intro h1 { margin: 15px 0 10px; font-family: "Manrope", "Gowun Dodum", sans-serif; font-size: clamp(31px, 4vw, 45px); line-height: 1.22; letter-spacing: -2.3px; }
+.intro h1 span { color: #637258; }
+.intro-description { margin: 0; color: #7d8278; font-family: "Gowun Dodum", sans-serif; font-size: 14px; line-height: 1.7; }
+.date-card { display: flex; flex-direction: column; align-items: flex-end; padding-bottom: 5px; }
+.date-card-label { color: #92978e; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; }
+.date-card-date { margin-top: 6px; font-family: "Manrope", sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -.4px; }
+.date-card-caption { margin-top: 4px; color: #92978e; font-size: 10px; }
+.date-card-caption span { margin-left: 2px; color: var(--coral); }
+.mobile-break { display: none; }
+
+.demo-notice { display: flex; align-items: center; gap: 9px; min-height: 39px; margin-bottom: 14px; padding: 9px 13px; border: 1px solid #ece8d4; border-radius: 8px; color: #797563; background: #fbf8ed; font-size: 10px; line-height: 1.5; }
+.demo-notice svg { width: 15px; min-width: 15px; fill: none; stroke: #9b8b50; stroke-width: 1.5; }
+.demo-notice strong { color: #70632f; }
+
+.recommendation-layout { display: grid; grid-template-columns: minmax(0, 1.77fr) minmax(275px, .8fr); gap: 16px; }
+.recommendation-card { position: relative; display: flex; min-height: 354px; overflow: hidden; border-radius: 17px; color: #fff; background: var(--forest); }
+.recommendation-card::before { position: absolute; top: -150px; right: 100px; width: 430px; height: 430px; border: 1px solid rgb(255 255 255 / 8%); border-radius: 50%; content: ""; }
+.recommendation-card::after { position: absolute; top: -92px; right: 158px; width: 312px; height: 312px; border: 1px solid rgb(255 255 255 / 7%); border-radius: 50%; content: ""; }
+.recommendation-content { position: relative; z-index: 2; display: flex; width: 57%; flex-direction: column; align-items: flex-start; padding: 31px 0 27px 34px; }
+.recommendation-overline { display: flex; align-items: center; gap: 8px; color: #c9d4bc; font-size: 9px; font-weight: 600; letter-spacing: 1.3px; }
+.sparkle { color: var(--lime); font-size: 16px; }
+.recommendation-label { margin: 23px 0 1px; color: #d0d6cc; font-family: "Gowun Dodum", sans-serif; font-size: 12px; }
+.recommendation-content h2 { margin: 0; color: #fff; font-family: "Gowun Dodum", sans-serif; font-size: clamp(33px, 4vw, 43px); font-weight: 700; letter-spacing: -1.6px; line-height: 1.3; }
+.dish-description { max-width: 345px; min-height: 22px; margin: 8px 0 12px; color: #c3cbbf; font-family: "Gowun Dodum", sans-serif; font-size: 11px; line-height: 1.65; }
+.dish-tags { display: flex; gap: 6px; }
+.dish-tag { padding: 5px 9px; border: 1px solid rgb(255 255 255 / 18%); border-radius: 99px; color: #dfe6d8; font-size: 9px; }
+.restaurant-summary { display: flex; align-items: center; gap: 11px; width: min(100%, 390px); margin-top: auto; padding-top: 20px; }
+.restaurant-icon { display: grid; width: 34px; height: 34px; flex: 0 0 34px; place-items: center; border: 1px solid rgb(255 255 255 / 19%); border-radius: 10px; background: rgb(255 255 255 / 7%); }
+.restaurant-icon svg { width: 19px; height: 19px; fill: none; stroke: #dce6d7; stroke-width: 1.45; stroke-linecap: round; stroke-linejoin: round; }
+.restaurant-summary-text, .price-summary { display: flex; flex-direction: column; gap: 4px; }
+.summary-label { color: #aab6a6; font-size: 9px; }
+.restaurant-summary-text strong, .price-summary strong { color: #fff; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.sample-label { padding: 2px 5px; border-radius: 4px; color: #dfe6d8; background: rgb(255 255 255 / 13%); font-size: 8px; font-weight: 500; vertical-align: 1px; }
+.summary-divider { width: 1px; height: 26px; margin: 0 3px 0 6px; background: rgb(255 255 255 / 20%); }
+.price-summary { margin-left: auto; }
+
+.recommendation-art { position: absolute; top: 0; right: 0; bottom: 0; width: 47%; overflow: hidden; }
+.recommendation-art::before { position: absolute; z-index: 1; top: 0; bottom: 0; left: -2px; width: 145px; content: ""; background: linear-gradient(90deg, var(--forest) 0%, rgb(39 57 46 / 75%) 35%, transparent 100%); }
+.food-photo-wrap { position: absolute; top: 43px; right: 35px; bottom: 40px; width: min(81%, 302px); overflow: hidden; border: 5px solid rgb(255 255 255 / 12%); border-radius: 48% 48% 43% 43% / 40% 40% 48% 48%; transform: rotate(4deg); }
+.food-photo-wrap img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.84); }
+.food-photo-wrap::after { position: absolute; inset: 0; content: ""; background: linear-gradient(180deg, transparent 55%, rgb(25 40 30 / 58%)); }
+.photo-caption { position: absolute; z-index: 1; right: 0; bottom: 17px; left: 0; color: #fff; text-align: center; font-size: 8px; font-weight: 600; letter-spacing: 1.6px; }
+.art-stamp { position: absolute; z-index: 2; top: 38px; right: 24px; display: grid; width: 67px; height: 67px; place-content: center; border: 1px solid rgb(255 255 255 / 75%); border-radius: 50%; color: #26372e; background: var(--lime); text-align: center; font-family: "Gowun Dodum", sans-serif; font-size: 11px; font-weight: 700; line-height: 1.25; transform: rotate(10deg); }
+.art-spark { position: absolute; z-index: 2; color: var(--lime); }
+.art-spark-one { right: 12px; bottom: 51px; font-size: 25px; }
+.art-spark-two { bottom: 35px; left: 30px; color: #fff; font-size: 17px; }
+
+.visit-card { display: flex; flex-direction: column; padding: 22px 22px 19px; border: 1px solid var(--line); border-radius: 17px; background: var(--paper); }
+.visit-card-header { display: flex; align-items: center; gap: 8px; }
+.visit-icon { display: grid; width: 31px; height: 31px; place-items: center; border-radius: 9px; color: #4d6946; background: #eef2e8; }
+.visit-icon svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.visit-header-text { color: #92978e; font-size: 9px; font-weight: 700; letter-spacing: 1.2px; }
+.open-status { display: inline-flex; align-items: center; gap: 5px; margin-left: auto; padding: 5px 7px; border-radius: 99px; color: #8c7844; background: #faf5e8; font-size: 8px; }
+.open-status span { width: 5px; height: 5px; border-radius: 50%; background: #c7a451; }
+.visit-card h3 { margin: 17px 0 12px; font-family: "Gowun Dodum", sans-serif; font-size: 19px; letter-spacing: -.6px; }
+.visit-card h3 .sample-label { color: #78816e; background: #eef1e9; }
+.visit-detail { display: flex; align-items: flex-start; gap: 8px; margin: 0 0 9px; color: #777d73; font-size: 10px; line-height: 1.55; }
+.detail-icon { margin-top: 1px; }
+.clock-icon svg { stroke: #a29b7e; }
+.visit-footer { display: flex; align-items: center; justify-content: space-between; gap: 5px; margin-top: auto; padding-top: 14px; border-top: 1px solid #f0f0ea; }
+.map-link { display: inline-flex; align-items: center; gap: 5px; color: #4e6947; font-size: 10px; font-weight: 700; }
+.map-link:hover { color: #263b2e; }
+.map-link svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.checked-date { color: #a0a49b; font-size: 8px; }
+
+.action-row { display: flex; align-items: center; gap: 12px; min-height: 63px; }
+.reroll-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px; padding: 0 14px; border: 1px solid #dfe3d8; border-radius: 8px; color: #344334; background: #fff; font-size: 10px; font-weight: 700; cursor: pointer; transition: border-color .2s ease, background .2s ease, transform .2s ease; }
+.reroll-button:hover { border-color: #9eae90; background: #f5f8f0; transform: translateY(-1px); }
+.reroll-button:disabled { color: #9da198; background: #f3f4ef; cursor: not-allowed; transform: none; }
+.reroll-button:disabled svg { stroke: #a5aa9f; }
+.reroll-button:focus-visible, a:focus-visible { outline: 3px solid rgb(112 142 84 / 38%); outline-offset: 3px; }
+.reroll-button svg { width: 16px; height: 16px; fill: none; stroke: #61784f; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.action-hint { color: #9a9e96; font-family: "Gowun Dodum", sans-serif; font-size: 10px; }
+.reroll-count { margin-left: auto; color: #90968b; font-size: 9px; }
+
+.nearby-section { padding: 44px 0 53px; border-top: 1px solid var(--line); }
+.section-heading { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 19px; }
+.section-heading .section-kicker { margin-bottom: 7px; }
+.section-heading h2 { margin: 0; font-family: "Gowun Dodum", sans-serif; font-size: 25px; letter-spacing: -1.1px; }
+.section-heading h2 span { color: #7a866e; }
+.section-description { margin: 0 0 1px; color: #92978e; font-family: "Gowun Dodum", sans-serif; font-size: 10px; line-height: 1.7; text-align: right; }
+.menu-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.menu-card { display: flex; min-height: 123px; align-items: center; gap: 13px; padding: 15px; border: 1px solid var(--line); border-radius: 12px; background: #fff; transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease; }
+.menu-card:hover { border-color: #cbd5c1; box-shadow: 0 8px 24px rgb(41 51 36 / 5%); transform: translateY(-2px); }
+.menu-card-visual { display: grid; width: 72px; height: 79px; flex: 0 0 72px; place-items: center; overflow: hidden; border-radius: 9px; background: var(--tile-bg, #f1f0e9); }
+.menu-card-visual img { width: 100%; height: 100%; object-fit: cover; }
+.menu-card-emoji { font-size: 28px; filter: drop-shadow(0 3px 2px rgb(40 35 25 / 12%)); }
+.menu-card-copy { min-width: 0; flex: 1; }
+.menu-card-category { color: #999d94; font-size: 8px; font-weight: 700; letter-spacing: .8px; }
+.menu-card h3 { overflow: hidden; margin: 5px 0 3px; font-family: "Gowun Dodum", sans-serif; font-size: 15px; letter-spacing: -.5px; text-overflow: ellipsis; white-space: nowrap; }
+.menu-card-restaurant { overflow: hidden; color: #90958c; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.menu-card-bottom { display: flex; align-items: center; justify-content: space-between; gap: 5px; margin-top: 8px; }
+.menu-card-price { color: #515b4e; font-size: 10px; font-weight: 700; }
+.menu-card-distance { color: #999e95; font-size: 8px; white-space: nowrap; }
+.card-map-link { display: block; margin-top: 7px; color: #5e7654; font-size: 9px; font-weight: 700; }
+.card-map-link:hover { text-decoration: underline; }
+
+.about-strip { display: flex; align-items: center; gap: 21px; margin-bottom: 36px; padding: 24px 28px; border-radius: 14px; background: #e9ede1; }
+.about-icon { display: grid; width: 45px; height: 45px; flex: 0 0 45px; place-items: center; border-radius: 13px; color: #536a47; background: #dce4d1; font-size: 24px; }
+.about-copy { min-width: 235px; }
+.about-copy .section-kicker { margin-bottom: 6px; }
+.about-copy h2 { margin: 0; font-family: "Gowun Dodum", sans-serif; font-size: 18px; line-height: 1.45; letter-spacing: -.6px; }
+.about-details { display: flex; flex: 1; justify-content: flex-end; gap: clamp(18px, 4vw, 48px); }
+.about-details > div { display: flex; align-items: flex-start; gap: 8px; color: #737d6c; font-family: "Gowun Dodum", sans-serif; font-size: 9px; line-height: 1.65; white-space: nowrap; }
+.about-number { color: #677c57; font-family: "Manrope", sans-serif; font-size: 10px; font-weight: 700; }
+.site-footer { display: flex; align-items: center; gap: 13px; min-height: 64px; border-top: 1px solid var(--line); color: #92978e; }
+.footer-brand { color: #444b41; font-family: "Manrope", "Gowun Dodum", sans-serif; font-size: 13px; font-weight: 800; letter-spacing: -.7px; }
+.site-footer p { margin: 0; font-family: "Gowun Dodum", sans-serif; font-size: 9px; }
+.footer-note { margin-left: auto; color: #a0a49b; font-size: 8px; }
+.toast { position: fixed; z-index: 20; right: 24px; bottom: 24px; max-width: min(360px, calc(100% - 32px)); padding: 12px 16px; border: 1px solid rgb(255 255 255 / 10%); border-radius: 9px; color: #fff; background: #27392e; box-shadow: 0 8px 30px rgb(18 27 19 / 18%); font-size: 12px; opacity: 0; pointer-events: none; transform: translateY(8px); transition: opacity .2s ease, transform .2s ease; }
+.toast.visible { opacity: 1; transform: translateY(0); }
+
+@media (min-width: 1300px) {
+  .page-shell, .header-inner { width: min(1160px, calc(100% - 96px)); }
+}
+@media (max-width: 950px) {
+  .header-inner, .page-shell { width: min(100% - 40px, 800px); }
+  .brand, .header-meta { flex-basis: auto; }
+  .main-nav { gap: 20px; }
+  .recommendation-layout { grid-template-columns: minmax(0, 1.5fr) minmax(250px, .85fr); gap: 12px; }
+  .recommendation-content { width: 64%; padding-left: 25px; }
+  .recommendation-art { width: 42%; }
+  .food-photo-wrap { right: 18px; width: 86%; }
+  .about-strip { flex-wrap: wrap; }
+  .about-details { justify-content: flex-start; width: 100%; margin-left: 66px; }
+}
+@media (max-width: 680px) {
+  body { min-width: 320px; }
+  .site-header { height: 64px; }
+  .header-inner, .page-shell { width: calc(100% - 36px); }
+  .brand { gap: 8px; }
+  .brand-mark { width: 34px; height: 34px; border-radius: 11px; }
+  .brand-mark svg { width: 24px; height: 24px; }
+  .brand-name { font-size: 18px; }
+  .main-nav { display: none; }
+  .header-meta { gap: 0; }
+  .location-pill { padding: 8px 9px; font-size: 9px; }
+  .avatar { display: none; }
+  .intro { align-items: flex-start; padding: 37px 0 20px; }
+  .intro h1 { margin-top: 13px; font-size: clamp(29px, 8vw, 38px); letter-spacing: -1.8px; }
+  .intro-description { font-size: 12px; }
+  .date-card { display: none; }
+  .demo-notice { align-items: flex-start; margin-bottom: 11px; font-size: 9px; }
+  .demo-notice svg { margin-top: 1px; }
+  .recommendation-layout { grid-template-columns: 1fr; gap: 10px; }
+  .recommendation-card { min-height: 346px; border-radius: 14px; }
+  .recommendation-content { width: 74%; padding: 24px 0 21px 22px; }
+  .recommendation-overline { font-size: 8px; }
+  .recommendation-label { margin-top: 24px; font-size: 11px; }
+  .recommendation-content h2 { font-size: 34px; }
+  .dish-description { max-width: 230px; font-size: 10px; }
+  .recommendation-art { width: 46%; opacity: .74; }
+  .recommendation-art::before { width: 90px; }
+  .food-photo-wrap { top: 69px; right: -33px; bottom: 79px; width: 110%; border-width: 3px; }
+  .art-stamp { top: 24px; right: 12px; width: 52px; height: 52px; font-size: 9px; }
+  .art-spark-one { right: 12px; bottom: 55px; font-size: 20px; }
+  .recommendation-card::before { right: -170px; }
+  .recommendation-card::after { right: -112px; }
+  .restaurant-summary { width: calc(100% + 45px); gap: 8px; }
+  .restaurant-icon { width: 30px; height: 30px; flex-basis: 30px; }
+  .restaurant-summary-text strong, .price-summary strong { font-size: 9px; }
+  .summary-label { font-size: 8px; }
+  .summary-divider { margin-right: 0; margin-left: 2px; }
+  .price-summary { margin-left: auto; }
+  .visit-card { min-height: 211px; padding: 17px; border-radius: 13px; }
+  .visit-card h3 { margin: 12px 0 9px; font-size: 17px; }
+  .visit-footer { padding-top: 10px; }
+  .action-row { min-height: 66px; flex-wrap: wrap; gap: 6px 10px; padding: 10px 0; }
+  .reroll-button { min-height: 36px; font-size: 9px; }
+  .action-hint { font-size: 9px; }
+  .reroll-count { width: 100%; margin: -2px 0 0; font-size: 8px; }
+  .nearby-section { padding: 33px 0 38px; }
+  .section-heading { align-items: flex-start; }
+  .section-heading h2 { font-size: 21px; }
+  .section-description { display: none; }
+  .menu-grid { grid-template-columns: 1fr; gap: 8px; }
+  .menu-card { min-height: 96px; gap: 11px; padding: 10px; }
+  .menu-card-visual { width: 69px; height: 72px; flex-basis: 69px; }
+  .menu-card h3 { font-size: 14px; }
+  .menu-card-bottom { margin-top: 6px; }
+  .card-map-link { margin-top: 5px; }
+  .about-strip { gap: 12px; margin-bottom: 25px; padding: 18px; }
+  .about-icon { width: 38px; height: 38px; flex-basis: 38px; font-size: 20px; }
+  .about-copy { min-width: 0; }
+  .about-copy h2 { font-size: 16px; }
+  .about-details { flex-direction: column; gap: 9px; margin-left: 50px; }
+  .about-details > div { align-items: center; font-size: 9px; }
+  .about-details br { display: none; }
+  .site-footer { flex-wrap: wrap; gap: 4px 10px; padding: 14px 0; }
+  .footer-note { width: 100%; margin: 2px 0 0; }
+  .toast { right: 14px; bottom: 14px; font-size: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
