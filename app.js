@@ -384,9 +384,10 @@ function renderLiveGrid(places) {
     card.className = "menu-card live-place-card";
 
     const picture = foodPicture(place.category, place.name);
-    const visual = createTextElement("div", "menu-card-visual", picture.emoji);
+    const visual = createTextElement("div", "menu-card-visual", "");
     visual.style.setProperty("--tile-bg", picture.color);
     visual.setAttribute("aria-hidden", "true");
+    visual.append(createTextElement("span", "menu-card-emoji", picture.emoji));
 
     const copy = createTextElement("div", "menu-card-copy", "");
     const category = createTextElement("span", "menu-card-category", `${categoryLabel(place.category)} · 카카오 장소`);
