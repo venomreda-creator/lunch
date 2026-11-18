@@ -1,4 +1,19 @@
-const MAX_CANDIDATES = 12;
+const MAX_CANDIDATES = 22;
+
+// Extra real places near Ajou University, merged with the API results so
+// the nearby table can show more than the 15 places Kakao returns per call.
+const SUPPLEMENTARY_PLACES = [
+  { id: "extra-songrim", name: "송림식당", category: "음식점 > 한식 > 백반", roadAddress: "경기 수원시 영통구 월드컵로193번길 21", phone: "031-213-6116", distanceMeters: 600 },
+  { id: "extra-hosikdang", name: "호식당 아주대점", category: "음식점 > 한식", roadAddress: "경기 수원시 영통구 아주로 20", phone: "031-507-1370-5524", distanceMeters: 520 },
+  { id: "extra-jipsin", name: "짚신매운갈비찜 아주대점", category: "음식점 > 한식 > 육류,고기요리", roadAddress: "경기 수원시 영통구 아주로 14-5", phone: "", distanceMeters: 540 },
+  { id: "extra-sogo", name: "소고 아주대점", category: "음식점 > 일식 > 돈까스,우동", roadAddress: "경기 수원시 영통구 아주대 정문 골목", phone: "", distanceMeters: 350 },
+  { id: "extra-eggmon", name: "에그몬 수원아주대병원점", category: "음식점 > 간식", roadAddress: "경기 수원시 영통구 월드컵로 164", phone: "", distanceMeters: 480 },
+  { id: "extra-ttungbo", name: "뚱보돈까스", category: "음식점 > 일식 > 돈까스,우동", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 400 },
+  { id: "extra-poke", name: "포케웨이타코웨이 아주대점", category: "음식점 > 양식 > 멕시칸", roadAddress: "경기 수원시 영통구 월드컵로193번길 7", phone: "", distanceMeters: 620 },
+  { id: "extra-ajudon", name: "아주돈", category: "음식점 > 한식 > 육류,고기요리", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 700 },
+  { id: "extra-kkungnyao", name: "꿍냐우", category: "음식점 > 아시안 > 쌀국수", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 680 },
+  { id: "extra-eommatang", name: "엄마동태", category: "음식점 > 한식", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 750 },
+];
 
 // The fallback list uses real places returned by the Kakao Local API.
 const demoRecommendations = [
@@ -190,6 +205,25 @@ function foodPicture(category = "", name = "") {
   return match ? { emoji: match.emoji, color: match.color } : { emoji: "🍽️", color: "#edf0e6" };
 }
 
+const demoSupplements = SUPPLEMENTARY_PLACES.map((place) => {
+  const label = categoryLabel(place.category);
+  const picture = foodPicture(place.category, place.name);
+  return {
+    id: place.id,
+    dish: label,
+    restaurant: place.name,
+    category: label,
+    price: 9000,
+    distance: Math.round(place.distanceMeters / 100) * 100,
+    reason: `${place.roadAddress}에 위치한 ${label} 식당이에요.`,
+    tags: [label, "아주대 주변"],
+    emoji: picture.emoji,
+    color: picture.color,
+    hours: place.phone || "영업 정보 확인 필요",
+    query: place.name,
+  };
+});
+
 const elements = {
   date: document.querySelector("#today-date"),
   dish: document.querySelector("#dish-name"),
@@ -215,7 +249,7 @@ const elements = {
   toast: document.querySelector("#toast"),
 };
 
-let recommendations = demoRecommendations;
+let recommendations = [...demoRecommendations, ...demoSupplements];
 let dataMode = "demo";
 let currentIndex = getDailyIndex(recommendations.length);
 let seenIds = new Set([recommendations[currentIndex].id]);
@@ -444,9 +478,14 @@ async function loadLivePlaces() {
     if (!response.ok) throw new Error(`API returned ${response.status}`);
 
     const payload = await response.json();
-    const places = Array.isArray(payload.places)
-      ? payload.places.slice(0, MAX_CANDIDATES).map(normalizePlace)
-      : [];
+    const apiPlaces = Array.isArray(payload.places) ? payload.places.map(normalizePlace) : [];
+    const apiIds = new Set(apiPlaces.map((place) => place.id));
+    const extras = SUPPLEMENTARY_PLACES.filter((place) => !apiIds.has(place.id)).map((place) => ({
+      ...place,
+      placeUrl: `https://map.kakao.com/link/search/${encodeURIComponent(place.name)}`,
+      address: place.roadAddress,
+    }));
+    const places = [...apiPlaces, ...extras].slice(0, MAX_CANDIDATES);
     if (!places.length) throw new Error("No nearby places returned");
 
     dataMode = "live";

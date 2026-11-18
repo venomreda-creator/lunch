@@ -92,33 +92,34 @@ export default {
     kakaoUrl.searchParams.set("sort", "distance");
     kakaoUrl.searchParams.set("size", "15");
 
-    let kakaoResponse;
-    try {
-      kakaoResponse = await fetch(kakaoUrl, {
+    async function fetchPage(page) {
+      const pageUrl = new URL(kakaoUrl.toString());
+      pageUrl.searchParams.set("page", String(page));
+      const response = await fetch(pageUrl, {
         headers: { Authorization: `KakaoAK ${env.KAKAO_REST_API_KEY}` },
         cf: { cacheTtl: 600, cacheEverything: true },
       });
-    } catch {
-      return jsonResponse(request, env, { error: "upstream_unavailable" }, 502);
+      if (!response.ok) throw new Error(`upstream ${response.status}`);
+      const body = await response.json();
+      return Array.isArray(body.documents) ? body.documents : [];
     }
 
-    if (!kakaoResponse.ok) {
-      return jsonResponse(request, env, { error: "place_search_failed", upstreamStatus: kakaoResponse.status }, 502);
-    }
-
-    let data;
+    let documents;
     try {
-      data = await kakaoResponse.json();
+      const [first, second] = await Promise.all([fetchPage(1), fetchPage(2)]);
+      documents = [...first, ...second];
     } catch {
-      return jsonResponse(request, env, { error: "invalid_upstream_response" }, 502);
+      return jsonResponse(request, env, { error: "place_search_failed" }, 502);
     }
+
+    const unique = Array.from(new Map(documents.map((place) => [place.id, place])).values());
 
     const response = jsonResponse(request, env, {
       source: "kakao-local",
       center: AJOU_CENTER,
       radiusMeters: 1600,
       distanceType: "straight-line",
-      places: Array.isArray(data.documents) ? data.documents.map(normalizePlace) : [],
+      places: unique.map(normalizePlace),
     }, 200, { "Cache-Control": "public, max-age=600" });
     return response;
   },
