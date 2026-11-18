@@ -1,3 +1,5 @@
+const MAX_CANDIDATES = 12;
+
 const demoRecommendations = [
   {
     id: "jeyuk",
@@ -337,7 +339,9 @@ async function loadLivePlaces() {
     if (!response.ok) throw new Error(`API returned ${response.status}`);
 
     const payload = await response.json();
-    const places = Array.isArray(payload.places) ? payload.places.map(normalizePlace) : [];
+    const places = Array.isArray(payload.places)
+      ? payload.places.slice(0, MAX_CANDIDATES).map(normalizePlace)
+      : [];
     if (!places.length) throw new Error("No nearby places returned");
 
     dataMode = "live";
