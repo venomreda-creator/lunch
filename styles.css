@@ -92,6 +92,7 @@ h1, h2, h3, p { margin-top: 0; }
 .recommendation-art::before { position: absolute; z-index: 1; top: 0; bottom: 0; left: -2px; width: 145px; content: ""; background: linear-gradient(90deg, var(--forest) 0%, rgb(39 57 46 / 75%) 35%, transparent 100%); }
 .food-photo-wrap { position: absolute; top: 43px; right: 35px; bottom: 40px; width: min(81%, 302px); overflow: hidden; border: 5px solid rgb(255 255 255 / 12%); border-radius: 48% 48% 43% 43% / 40% 40% 48% 48%; transform: rotate(4deg); }
 .food-photo-wrap img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.84); }
+.hero-food-emoji { position: absolute; inset: 0; display: grid; place-items: center; font-size: 96px; filter: drop-shadow(0 6px 8px rgb(0 0 0 / 22%)); }
 .food-photo-wrap::after { position: absolute; inset: 0; content: ""; background: linear-gradient(180deg, transparent 55%, rgb(25 40 30 / 58%)); }
 .photo-caption { position: absolute; z-index: 1; right: 0; bottom: 17px; left: 0; color: #fff; text-align: center; font-size: 8px; font-weight: 600; letter-spacing: 1.6px; }
 .art-stamp { position: absolute; z-index: 2; top: 38px; right: 24px; display: grid; width: 67px; height: 67px; place-content: center; border: 1px solid rgb(255 255 255 / 75%); border-radius: 50%; color: #26372e; background: var(--lime); text-align: center; font-family: "Gowun Dodum", sans-serif; font-size: 11px; font-weight: 700; line-height: 1.25; transform: rotate(10deg); }

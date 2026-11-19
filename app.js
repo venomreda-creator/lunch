@@ -241,6 +241,36 @@ function isFoodPhoto(url) {
   return url.includes("kakaocdn.net") || url.includes("pstatic.net");
 }
 
+// Hero image: use the place's food photo, or a food emoji when none exists.
+function renderHeroImage(photoUrl, category, name) {
+  const fallbackEmoji = foodPicture(category, name).emoji;
+  const wrap = elements.dishImageWrap;
+  const oldPhoto = wrap?.querySelector("img");
+  if (oldPhoto) oldPhoto.remove();
+
+  const emoji = elements.heroFoodEmoji;
+  if (!isFoodPhoto(photoUrl)) {
+    if (emoji) {
+      emoji.textContent = fallbackEmoji;
+      emoji.style.display = "grid";
+    }
+    return;
+  }
+
+  if (emoji) emoji.style.display = "none";
+  const photo = document.createElement("img");
+  photo.src = photoUrl;
+  photo.alt = "";
+  photo.onerror = () => {
+    photo.remove();
+    if (emoji) {
+      emoji.textContent = fallbackEmoji;
+      emoji.style.display = "grid";
+    }
+  };
+  if (wrap) wrap.insertBefore(photo, emoji);
+}
+
 // Match a food illustration to the place category/name for the nearby cards.
 const FOOD_PICTURES = [
   { pattern: /떡볶이|분식|김밥|스넥/, emoji: "🍢", color: "#f6e3d5" },
@@ -284,6 +314,8 @@ const elements = {
   reason: document.querySelector("#dish-reason"),
   tags: document.querySelector("#dish-tags"),
   recommendationLabel: document.querySelector("#recommendation-label"),
+  dishImageWrap: document.querySelector("#dish-image-wrap"),
+  heroFoodEmoji: document.querySelector("#hero-food-emoji"),
   restaurant: document.querySelector("#restaurant-name"),
   visitRestaurant: document.querySelector("#visit-restaurant"),
   summaryLabel: document.querySelector("#summary-label"),
@@ -398,6 +430,7 @@ function renderRecommendation(index) {
     elements.hours.textContent = item.phone ? `전화 ${item.phone} · 영업시간 미제공` : "영업시간 정보 미제공";
     elements.map.href = placeDetailUrl(item);
     elements.map.setAttribute("aria-label", `${item.name} 카카오맵 상세보기`);
+    renderHeroImage(item.photoUrl, item.category, item.name);
     elements.checkedDate.textContent = "카카오 장소 검색 결과";
     elements.count.textContent = `오늘의 추천 ${seenIds.size} / ${recommendations.length}`;
     elements.reroll.disabled = seenIds.size >= recommendations.length;
@@ -419,6 +452,7 @@ function renderRecommendation(index) {
   elements.hours.textContent = item.hours;
   elements.map.href = placeDetailUrl({ id: item.id, name: item.restaurant, query: item.query, placeUrl: item.placeUrl });
   elements.map.setAttribute("aria-label", `${item.restaurant} 예시, 카카오맵 상세보기`);
+  renderHeroImage(DEMO_PLACE_PHOTOS[item.id], item.category, item.restaurant);
   elements.checkedDate.textContent = "정보 확인일: 예시";
   elements.count.textContent = `오늘의 추천 ${seenIds.size} / ${recommendations.length}`;
   elements.reroll.disabled = seenIds.size >= recommendations.length;
