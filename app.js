@@ -465,7 +465,19 @@ function renderLiveGrid(places) {
     const visual = createTextElement("div", "menu-card-visual", "");
     visual.style.setProperty("--tile-bg", picture.color);
     visual.setAttribute("aria-hidden", "true");
-    visual.append(createTextElement("span", "menu-card-emoji", picture.emoji));
+
+    if (place.photoUrl) {
+      const photo = document.createElement("img");
+      photo.src = place.photoUrl;
+      photo.alt = "";
+      photo.loading = "lazy";
+      photo.onerror = () => {
+        photo.replaceWith(createTextElement("span", "menu-card-emoji", picture.emoji));
+      };
+      visual.append(photo);
+    } else {
+      visual.append(createTextElement("span", "menu-card-emoji", picture.emoji));
+    }
 
     const copy = createTextElement("div", "menu-card-copy", "");
     const category = createTextElement("span", "menu-card-category", `${categoryLabel(place.category)} · 카카오 장소`);
@@ -506,6 +518,7 @@ function normalizePlace(place) {
     roadAddress: String(place.roadAddress || ""),
     phone: String(place.phone || ""),
     placeUrl: String(place.placeUrl || ""),
+    photoUrl: String(place.photoUrl || ""),
     distanceMeters: Number(place.distanceMeters) || 0,
   };
 }

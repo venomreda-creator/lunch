@@ -54,6 +54,24 @@ function normalizePlace(place) {
   };
 }
 
+// The Kakao place-detail page exposes its first/representative photo as og:image.
+async function fetchPlacePhoto(id) {
+  try {
+    const response = await fetch(`https://place.map.kakao.com/${id}`, {
+      headers: { "User-Agent": "Mozilla/5.0 (compatible; AjouHankki/1.0)" },
+      signal: AbortSignal.timeout(3000),
+      cf: { cacheTtl: 86400, cacheEverything: true },
+    });
+    if (!response.ok) return "";
+    const html = await response.text();
+    const match = html.match(/<meta property="og:image" content="([^"]+)"/);
+    if (!match) return "";
+    return match[1].replace(/^\/\//, "https://").replace(/^http:\/\//, "https://");
+  } catch {
+    return "";
+  }
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -113,13 +131,22 @@ export default {
     }
 
     const unique = Array.from(new Map(documents.map((place) => [place.id, place])).values());
+    const places = unique.map(normalizePlace);
+
+    for (let index = 0; index < places.length; index += 8) {
+      const batch = places.slice(index, index + 8);
+      const photos = await Promise.all(batch.map((place) => fetchPlacePhoto(place.id)));
+      batch.forEach((place, batchIndex) => {
+        place.photoUrl = photos[batchIndex] || "";
+      });
+    }
 
     const response = jsonResponse(request, env, {
       source: "kakao-local",
       center: AJOU_CENTER,
       radiusMeters: 1600,
       distanceType: "straight-line",
-      places: unique.map(normalizePlace),
+      places,
     }, 200, { "Cache-Control": "public, max-age=600" });
     return response;
   },
