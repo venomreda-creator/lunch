@@ -313,6 +313,20 @@ function mapsUrl(query) {
   return `https://map.kakao.com/link/search/${encodeURIComponent(query)}`;
 }
 
+// Kakao place-detail page (the screen shown after tapping 상세보기 in Kakao Map).
+// Uses the numeric place ID when available; otherwise falls back to a name search.
+function placeDetailUrl(place) {
+  const placeUrl = String(place?.placeUrl || "");
+  if (placeUrl.includes("place.map.kakao.com") || placeUrl.includes("place/search/detail")) {
+    return placeUrl;
+  }
+  const id = String(place?.id || "");
+  if (/^\d+$/.test(id)) {
+    return `https://place.map.kakao.com/${id}`;
+  }
+  return mapsUrl(place?.name || place?.restaurant || place?.query || "");
+}
+
 function categoryLabel(category = "음식점") {
   return category.split(">").at(-1)?.trim() || "음식점";
 }
@@ -358,8 +372,8 @@ function renderRecommendation(index) {
     elements.price.textContent = "별도 확인 필요";
     elements.location.textContent = item.roadAddress || item.address || "주소 정보 없음";
     elements.hours.textContent = item.phone ? `전화 ${item.phone} · 영업시간 미제공` : "영업시간 정보 미제공";
-    elements.map.href = item.placeUrl || mapsUrl(item.name);
-    elements.map.setAttribute("aria-label", `${item.name} 카카오맵에서 보기`);
+    elements.map.href = placeDetailUrl(item);
+    elements.map.setAttribute("aria-label", `${item.name} 카카오맵 상세보기`);
     elements.checkedDate.textContent = "카카오 장소 검색 결과";
     elements.count.textContent = `오늘의 추천 ${seenIds.size} / ${recommendations.length}`;
     elements.reroll.disabled = seenIds.size >= recommendations.length;
@@ -379,8 +393,8 @@ function renderRecommendation(index) {
   elements.price.textContent = formatPrice(item.price);
   elements.location.textContent = `아주대학교 정문 주변 · 도보 약 ${item.distance}분 (예시)`;
   elements.hours.textContent = item.hours;
-  elements.map.href = mapsUrl(item.query);
-  elements.map.setAttribute("aria-label", `${item.restaurant} 예시, 지도에서 검색`);
+  elements.map.href = placeDetailUrl({ id: item.id, name: item.restaurant, query: item.query, placeUrl: item.placeUrl });
+  elements.map.setAttribute("aria-label", `${item.restaurant} 예시, 카카오맵 상세보기`);
   elements.checkedDate.textContent = "정보 확인일: 예시";
   elements.count.textContent = `오늘의 추천 ${seenIds.size} / ${recommendations.length}`;
   elements.reroll.disabled = seenIds.size >= recommendations.length;
@@ -434,7 +448,7 @@ function renderDemoGrid() {
           <span class="menu-card-price">약 ${item.price.toLocaleString("ko-KR")}원</span>
           <span class="menu-card-distance">도보 ${item.distance}분 (예시)</span>
         </div>
-        <a class="card-map-link" href="${mapsUrl(item.query)}" target="_blank" rel="noopener noreferrer" aria-label="${item.dish} 주변 식당 지도에서 검색">주변 식당 지도 검색 ↗</a>
+        <a class="card-map-link" href="${placeDetailUrl({ id: item.id, name: item.restaurant, query: item.query, placeUrl: item.placeUrl })}" target="_blank" rel="noopener noreferrer" aria-label="${item.restaurant} 카카오맵 상세보기">카카오맵 상세보기 ↗</a>
       </div>
     `;
     card.dataset.index = String(index);
@@ -464,10 +478,10 @@ function renderLiveGrid(places) {
     );
 
     const link = createTextElement("a", "card-map-link", "카카오맵에서 보기 ↗");
-    link.href = place.placeUrl || mapsUrl(place.name);
+    link.href = placeDetailUrl(place);
     link.target = "_blank";
     link.rel = "noopener noreferrer";
-    link.setAttribute("aria-label", `${place.name}, 카카오맵에서 보기`);
+    link.setAttribute("aria-label", `${place.name}, 카카오맵 상세보기`);
 
     copy.append(category, name, address, bottom, link);
     card.append(visual, copy);
