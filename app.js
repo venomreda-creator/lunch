@@ -217,6 +217,22 @@ const demoRecommendations = [
   },
 ];
 
+// First photo from each place's Kakao Map detail page (og:image).
+const DEMO_PLACE_PHOTOS = {
+  "1935664028": "https://img1.kakaocdn.net/cthumb/local/C800x400.q50/?fname=https%3A%2F%2Fpostfiles.pstatic.net%2FMjAyMzEyMDNfMjUz%2FMDAxNzAxNTc4NDY3ODg3.dl3IoV_bt3BaPQghumvO_Yx9_EYfyb0IhTa3IWGmQDgg.HlM50xzad72qh4F0Efpr2vhInbgW_djUnr7cFq5R_vEg.PNG.kalista25%2Fimage.png%3Ftype%3Dw773",
+  "955122915": "https://img1.kakaocdn.net/cthumb/local/C800x400.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Flocal%2FkakaomapPhoto%2Freview%2Fa075bfd43b4ba73e67e0cdd824d837de9e10b166%3Foriginal",
+  "161342189": "https://img1.kakaocdn.net/cthumb/local/C800x400.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Flocal%2FkakaomapPhoto%2Freview%2Fa3bc1cb21a33e5b5723a6c1f3b41f54fd2007940%3Foriginal",
+  "9211061": "https://staticmap.kakao.com/staticmap/og?type=place&srs=wgs84&size=400x200&service=placeweb&m=127.0478300989488%2C37.28312026970783",
+  "11103969": "https://img1.kakaocdn.net/cthumb/local/C800x400.q50/?fname=https%3A%2F%2Fpostfiles.pstatic.net%2FMjAyNjAzMzBfMjA3%2FMDAxNzc0ODc0MDM4Njg1.f2EKPJXUme_fJYKdnJeXQOe46azz8wCxnUf9c-rA3Akg.kHbxFKv3Ag9cV9yabNhw291bOebZ2-GYrEq9BTaI5Isg.JPEG%2FIMG%25EF%25BC%25BF6874.jpg%3Ftype%3Dw580",
+  "2050956794": "https://staticmap.kakao.com/staticmap/og?type=place&srs=wgs84&size=400x200&service=placeweb&m=127.04442985795622%2C37.284361424561716",
+  "2041247700": "https://img1.kakaocdn.net/cthumb/local/C800x400.q50/?fname=https%3A%2F%2Fpostfiles.pstatic.net%2FMjAyNDA3MTVfMjQ5%2FMDAxNzIxMDQwMjQ1MjUz.A_QVfxTDSa2pwVmYkxBJZIe-QmCDdDoZ6We6uQ3U43Ig.4o3RyTVXifCHwo7bd6eILfp6N9hxrmsPgLiUZWzwqucg.JPEG%2FIMG_4766.jpg%3Ftype%3Dw966",
+  "1854907049": "https://img1.kakaocdn.net/cthumb/local/C800x400.q50/?fname=https%3A%2F%2Fpostfiles.pstatic.net%2FMjAyNjA1MjBfMTU1%2FMDAxNzc5Mjg3MDE0NDA3.45eHdP4KgaL2VSFsuXUNB9g1I2TDgw3o2-SWc0qASIQg.3eKXgSARIqj3Ab1bDcOyxoaKcJeNlLx6aYdyTW1yxBgg.JPEG%2FSE-4E8C0FF7-7E7D-4DB7-8406-9CAFD2499E23.jpg%3Ftype%3Dw773",
+  "1345424704": "https://img1.kakaocdn.net/cthumb/local/C800x400.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Flocal%2FkakaomapPhoto%2Freview%2F825afdb1a10c4d7a372d2d3f6d3210e2aa06a2fa%3Foriginal",
+  "2100868842": "https://staticmap.kakao.com/staticmap/og?type=place&srs=wgs84&size=400x200&service=placeweb&m=127.04134803095272%2C37.28243071324337",
+  "964867646": "https://img1.kakaocdn.net/cthumb/local/C800x400.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Fmystore%2FB7562C3B2A1D4E0F80EF8A9865CFBE7B",
+  "1160577190": "https://img1.kakaocdn.net/cthumb/local/C800x400.q50/?fname=https%3A%2F%2Fpostfiles.pstatic.net%2FMjAyNjA2MTFfMTcg%2FMDAxNzgxMTM0ODEyMTY3.cCHFlrRwGRY3rz3DHTFv7StohJf6o0t7KVjh3bVwcC8g.E4XCZeCPsWx7_PX4HyRd7E8SqwIlGyvHeNBW0BAwx4gg.JPEG%2F900_1781134590234.jpg%3Ftype%3Dw386",
+};
+
 // Match a food illustration to the place category/name for the nearby cards.
 const FOOD_PICTURES = [
   { pattern: /떡볶이|분식|김밥|스넥/, emoji: "🍢", color: "#f6e3d5" },
@@ -438,7 +454,9 @@ function renderDemoGrid() {
     card.className = "menu-card";
     card.innerHTML = `
       <div class="menu-card-visual" style="--tile-bg:${item.color}" aria-hidden="true">
-        <span class="menu-card-emoji">${item.emoji}</span>
+        ${DEMO_PLACE_PHOTOS[item.id]
+          ? `<img src="${DEMO_PLACE_PHOTOS[item.id]}" alt="" loading="lazy" onerror="this.onerror=null;this.outerHTML='<span class=&quot;menu-card-emoji&quot;>${item.emoji}</span>'" />`
+          : `<span class="menu-card-emoji">${item.emoji}</span>`}
       </div>
       <div class="menu-card-copy">
         <span class="menu-card-category">${item.category} · 예시</span>
