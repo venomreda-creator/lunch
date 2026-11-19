@@ -33,7 +33,7 @@ const SUPPLEMENTARY_PLACES = [
   { id: "extra-doiramen", name: "도이라멘", category: "음식점 > 일식 > 라멘", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 530 },
   { id: "extra-kkulmul", name: "꿀우물", category: "음식점 > 한식", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 610 },
   { id: "extra-saengsamgyeop", name: "생삼겹살 연어 원천점", category: "음식점 > 한식 > 육류,고기요리", roadAddress: "경기 수원시 영통구 원천동 인근", phone: "", distanceMeters: 690 },
-  { id: "extra-machai", name: "마차이랩 아주대점", category: "음식점 > 아시안", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 400 },
+  { id: "extra-machai", name: "마차이짬뽕 아주대점", category: "음식점 > 중식 > 짬뽕", roadAddress: "경기 수원시 팔달구 우만동 573-6", phone: "", distanceMeters: 760 },
   { id: "extra-sandeomi", name: "산더미 미성돈지국밥 아주대점", category: "음식점 > 한식 > 국밥", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 640 },
   { id: "extra-jiopasta", name: "지오파스타", category: "음식점 > 양식 > 파스타", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 570 },
   { id: "extra-dalgumasil", name: "김종근의달구마실", category: "음식점 > 한식", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 710 },
