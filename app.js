@@ -233,6 +233,14 @@ const DEMO_PLACE_PHOTOS = {
   "1160577190": "https://img1.kakaocdn.net/cthumb/local/C800x400.q50/?fname=https%3A%2F%2Fpostfiles.pstatic.net%2FMjAyNjA2MTFfMTcg%2FMDAxNzgxMTM0ODEyMTY3.cCHFlrRwGRY3rz3DHTFv7StohJf6o0t7KVjh3bVwcC8g.E4XCZeCPsWx7_PX4HyRd7E8SqwIlGyvHeNBW0BAwx4gg.JPEG%2F900_1781134590234.jpg%3Ftype%3Dw386",
 };
 
+// Kakao uses a static map image as og:image when a place has no real photo.
+// Only treat non-map images as food photos; otherwise fall back to the emoji.
+function isFoodPhoto(url) {
+  if (!url) return false;
+  if (url.includes("staticmap.kakao.com")) return false;
+  return url.includes("kakaocdn.net") || url.includes("pstatic.net");
+}
+
 // Match a food illustration to the place category/name for the nearby cards.
 const FOOD_PICTURES = [
   { pattern: /떡볶이|분식|김밥|스넥/, emoji: "🍢", color: "#f6e3d5" },
@@ -454,7 +462,7 @@ function renderDemoGrid() {
     card.className = "menu-card";
     card.innerHTML = `
       <div class="menu-card-visual" style="--tile-bg:${item.color}" aria-hidden="true">
-        ${DEMO_PLACE_PHOTOS[item.id]
+        ${isFoodPhoto(DEMO_PLACE_PHOTOS[item.id])
           ? `<img src="${DEMO_PLACE_PHOTOS[item.id]}" alt="" loading="lazy" onerror="this.onerror=null;this.outerHTML='<span class=&quot;menu-card-emoji&quot;>${item.emoji}</span>'" />`
           : `<span class="menu-card-emoji">${item.emoji}</span>`}
       </div>
@@ -484,7 +492,7 @@ function renderLiveGrid(places) {
     visual.style.setProperty("--tile-bg", picture.color);
     visual.setAttribute("aria-hidden", "true");
 
-    if (place.photoUrl) {
+    if (isFoodPhoto(place.photoUrl)) {
       const photo = document.createElement("img");
       photo.src = place.photoUrl;
       photo.alt = "";
