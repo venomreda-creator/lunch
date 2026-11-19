@@ -50,7 +50,7 @@ function normalizePlace(place) {
     longitude: Number(place.x),
     latitude: Number(place.y),
     distanceMeters: Number(place.distance) || null,
-    placeUrl: place.place_url || "",
+    placeUrl: String(place.place_url || "").replace(/^http:\/\//, "https://"),
   };
 }
 
@@ -106,8 +106,8 @@ export default {
 
     let documents;
     try {
-      const [first, second] = await Promise.all([fetchPage(1), fetchPage(2)]);
-      documents = [...first, ...second];
+      const pages = await Promise.all([1, 2, 3, 4].map(fetchPage));
+      documents = pages.flat();
     } catch {
       return jsonResponse(request, env, { error: "place_search_failed" }, 502);
     }

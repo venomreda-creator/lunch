@@ -523,13 +523,8 @@ async function loadLivePlaces() {
 
     const payload = await response.json();
     const apiPlaces = Array.isArray(payload.places) ? payload.places.map(normalizePlace) : [];
-    const apiIds = new Set(apiPlaces.map((place) => place.id));
-    const extras = SUPPLEMENTARY_PLACES.filter((place) => !apiIds.has(place.id)).map((place) => ({
-      ...place,
-      placeUrl: `https://map.kakao.com/link/search/${encodeURIComponent(place.name)}`,
-      address: place.roadAddress,
-    }));
-    const places = [...apiPlaces, ...extras].slice(0, MAX_CANDIDATES);
+    // Use only real Kakao places so every card opens a place-detail page.
+    const places = apiPlaces.slice(0, MAX_CANDIDATES);
     if (!places.length) throw new Error("No nearby places returned");
 
     dataMode = "live";
