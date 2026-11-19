@@ -474,7 +474,6 @@ function renderLiveGrid(places) {
     const bottom = createTextElement("div", "menu-card-bottom", "");
     bottom.append(
       createTextElement("span", "menu-card-distance", `${formatDistance(place.distanceMeters)} · 직선거리`),
-      createTextElement("span", "menu-card-price", "메뉴·가격 별도 확인"),
     );
 
     const link = createTextElement("a", "card-map-link", "카카오맵에서 보기 ↗");
