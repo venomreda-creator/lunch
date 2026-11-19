@@ -1,4 +1,4 @@
-const MAX_CANDIDATES = 22;
+const MAX_CANDIDATES = 52;
 
 // Extra real places near Ajou University, merged with the API results so
 // the nearby table can show more than the 15 places Kakao returns per call.
@@ -13,6 +13,36 @@ const SUPPLEMENTARY_PLACES = [
   { id: "extra-ajudon", name: "아주돈", category: "음식점 > 한식 > 육류,고기요리", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 700 },
   { id: "extra-kkungnyao", name: "꿍냐우", category: "음식점 > 아시안 > 쌀국수", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 680 },
   { id: "extra-eommatang", name: "엄마동태", category: "음식점 > 한식", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 750 },
+  { id: "extra-dongari", name: "동아리즉석떡볶이", category: "음식점 > 분식 > 떡볶이", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 300 },
+  { id: "extra-ttungbo-ajussi", name: "뚱보아저씨수제돈까스 아주대점", category: "음식점 > 일식 > 돈까스,우동", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 320 },
+  { id: "extra-umanjokbal", name: "우만동족발집 아주대점", category: "음식점 > 한식 > 족발,보쌈", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 760 },
+  { id: "extra-keunjip", name: "큰집멸치국수", category: "음식점 > 한식 > 국수", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 520 },
+  { id: "extra-gyudongjip", name: "규동집 아주대점", category: "음식점 > 일식 > 덮밥", roadAddress: "경기 수원시 팔달구 아주로47번길 23", phone: "", distanceMeters: 560 },
+  { id: "extra-ajukalsu", name: "아주칼국수", category: "음식점 > 한식 > 국수", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 300 },
+  { id: "extra-jjokjjo", name: "쪼쪼", category: "음식점 > 한식", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 410 },
+  { id: "extra-madamhao", name: "마담하오", category: "음식점 > 중식", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 480 },
+  { id: "extra-sarangjip", name: "사랑집", category: "음식점 > 한식 > 육류,고기요리", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 390 },
+  { id: "extra-jeil", name: "제일참개백반", category: "음식점 > 한식 > 백반", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 440 },
+  { id: "extra-ssammara", name: "쌈마라 아주대직영점", category: "음식점 > 한식", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 360 },
+  { id: "extra-hanjogak", name: "한조각", category: "음식점 > 한식", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 500 },
+  { id: "extra-umanjumeok", name: "우만주먹", category: "음식점 > 한식", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 740 },
+  { id: "extra-halmeoni", name: "할머니부대찌개", category: "음식점 > 한식 > 찌개", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 450 },
+  { id: "extra-harupoke", name: "하루포케 수원아주대점", category: "음식점 > 양식 > 샐러드", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 380 },
+  { id: "extra-gateun", name: "같은 아주대점", category: "음식점 > 한식", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 470 },
+  { id: "extra-bonuri", name: "본우리반상 아주대병원점", category: "음식점 > 한식 > 반상", roadAddress: "경기 수원시 영통구 아주대학교병원 인근", phone: "", distanceMeters: 490 },
+  { id: "extra-doiramen", name: "도이라멘", category: "음식점 > 일식 > 라멘", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 530 },
+  { id: "extra-kkulmul", name: "꿀우물", category: "음식점 > 한식", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 610 },
+  { id: "extra-saengsamgyeop", name: "생삼겹살 연어 원천점", category: "음식점 > 한식 > 육류,고기요리", roadAddress: "경기 수원시 영통구 원천동 인근", phone: "", distanceMeters: 690 },
+  { id: "extra-machai", name: "마차이랩 아주대점", category: "음식점 > 아시안", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 400 },
+  { id: "extra-sandeomi", name: "산더미 미성돈지국밥 아주대점", category: "음식점 > 한식 > 국밥", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 640 },
+  { id: "extra-jiopasta", name: "지오파스타", category: "음식점 > 양식 > 파스타", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 570 },
+  { id: "extra-dalgumasil", name: "김종근의달구마실", category: "음식점 > 한식", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 710 },
+  { id: "extra-mugyo", name: "무교동일품순두부", category: "음식점 > 한식 > 순두부", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 660 },
+  { id: "extra-gaya", name: "가야지양평해장국 광교점", category: "음식점 > 한식 > 해장국", roadAddress: "경기 수원시 영통구 광교 인근", phone: "", distanceMeters: 820 },
+  { id: "extra-giul", name: "기울어진배기", category: "음식점 > 한식", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 540 },
+  { id: "extra-byeolmi", name: "별미분식", category: "음식점 > 분식", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 340 },
+  { id: "extra-hankkeut", name: "한끗셀프덮밥 아주대병원점", category: "음식점 > 한식 > 덮밥", roadAddress: "경기 수원시 영통구 아주대학교병원 인근", phone: "", distanceMeters: 510 },
+  { id: "extra-mageutteum", name: "맑으뜸회연어", category: "음식점 > 일식 > 회", roadAddress: "경기 수원시 영통구 아주대학교 인근", phone: "", distanceMeters: 780 },
 ];
 
 // The fallback list uses real places returned by the Kakao Local API.
